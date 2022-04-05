@@ -1,10 +1,12 @@
 import './App.css';
+import LoginForm from './components/LoginForm.js';
 
-function App() {
+const App = ()=> {
   return (
-  <div className="text-3xl font-bold underline">
-    Hello World!    
-  </div>
+  <h1>
+    Hello World!  
+    <LoginForm></LoginForm>  
+  </h1>
   );
 }
 
