@@ -2,16 +2,24 @@ import React from "react";
 import {useState} from 'react';
 import db from '../firebase/firebase.js';
 import { getDocs, collection, doc, setDoc, addDoc, query, orderBy, limit, getDoc } from 'firebase/firestore';
+import Error from './error.js'
 
 const LoginForm = (props) =>{
     const [login,setLogin]= useState(null);
-    const [password,setPassword]= useState(null);
-   
+    const [password,setPassword]= useState(null);  
+    const [isError,setIsError] = useState(false);
+    const [errorText, setErrorText] = useState("") 
 
     const onFormSubmit = (event)=>{
         event.preventDefault();
-        if(login && password)
-        props.onSubmit(login,password);
+        if(login && password){
+          setIsError(false);
+          props.onSubmit(login,password);
+        }
+        else{
+        setIsError(true);
+        setErrorText("Wypełnij wymagane pola");
+        }
     }
 
     const onLoginChange =(event)=>{
@@ -23,6 +31,10 @@ const LoginForm = (props) =>{
     }
 
     return (
+      <div>
+        {isError === true &&
+       <Error Text={errorText} alertType="alert-warning"></Error>
+      }
       <form onSubmit={onFormSubmit}>
         <label>
           Login:
@@ -34,6 +46,7 @@ const LoginForm = (props) =>{
         </label>
         <input type="submit" value="Wyślij" />
       </form>
+      </div>
     );
 }
 

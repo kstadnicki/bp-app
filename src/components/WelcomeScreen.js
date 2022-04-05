@@ -2,7 +2,7 @@ import React from 'react';
 
 const WelcomeScreen = ({imie, rola})=>{
     return(
-    <div>Witaj {imie} Rola: {rola}</div>
+    <h1>Witaj {imie} Rola: {rola}</h1>
     );
 }
 
