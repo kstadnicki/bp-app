@@ -30,7 +30,6 @@ const App = ()=> {
       if(response._document.data.value.mapValue.fields.password.stringValue !== password)
           setIsLoggedIn(false);
   }
-
   if(isLoggedIn === false)
   return (
   <h1>
