@@ -62,7 +62,8 @@ const Chat = ({imie, rola, userid})=>{
 
     return (
         <div>
-          <ChatMessage userid={userid} messages={messages}/>
+          {/* <ChatMessage userid={userid} messages={messages}/> */}
+          {messages && messages.map(msg => <ChatMessage key ={msg.id} message={msg} userid={userid} />)}
         <form onSubmit={sendMsg}>
           <input value={formValue} onChange={ e => setFormValue(e.target.value)}/>
           <button type="submit">Send</button>
