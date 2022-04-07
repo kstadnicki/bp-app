@@ -1,8 +1,13 @@
 import React from 'react';
+import Chat from './Chat';
 
-const WelcomeScreen = ({imie, rola})=>{
+const WelcomeScreen = ({imie, rola, userid})=>{
     return(
-    <h1>Witaj {imie} Rola: {rola}</h1>
+        <div>
+            <h1>Witaj {imie} Rola: {rola}</h1>
+            <Chat imie={imie} rola={rola} userid = {userid}></Chat>  
+            
+        </div>
     );
 }
 

@@ -12,7 +12,9 @@ const App = ()=> {
     const [userName, setUserName] = useState(null);
     const [role,setRole]= useState(null);
     const [isError,setIsError] = useState(false);
-    const [errorText, setErrorText] = useState("")
+    const [errorText, setErrorText] = useState("");
+    const [userid, setUserID] = useState(null);
+
 
     const Login = async(login,password)=>{
       const response = await getDoc(doc(db,"users",login));
@@ -24,7 +26,12 @@ const App = ()=> {
       }
       if(response._document.data.value.mapValue.fields.password.stringValue === password){
           setUserName(response._document.data.value.mapValue.fields.imie.stringValue);
+          //console.log(response._document.data.value);
+          console.log("id " + login);
+          setUserID(login);
+          console.log("id " + userid);
           setRole(response._document.data.value.mapValue.fields.rola.stringValue);
+          console.log(role);
           setIsLoggedIn(true);
       }
       if(response._document.data.value.mapValue.fields.password.stringValue !== password)
@@ -33,7 +40,7 @@ const App = ()=> {
   if(isLoggedIn === false)
   return (
   <h1>
-    Hello World!  
+    Hello!  
     {isError === true &&
        <Error Text={errorText} alertType="alert-danger"></Error>
       }
@@ -41,7 +48,7 @@ const App = ()=> {
   </h1>
   );
   if(isLoggedIn === true)
-  return(<WelcomeScreen imie={userName} rola={role}/>)
+  return(<WelcomeScreen imie={userName} rola={role} userid = {userid}/>)
   
 }
 
