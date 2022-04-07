@@ -3,6 +3,7 @@ import db from '../firebase/firebase.js';
 import firebase from 'firebase/compat/app';
 import { getDocs, collection, doc, setDoc, addDoc, query, orderBy, limit, getDoc, Timestamp, onSnapshot } from 'firebase/firestore';
 import ChatMessage from './ChatMessage.js';
+import ListOfChatMessages from './ListOfChatMessages';
 
 
 const Chat = ({imie, rola, userid})=>{    
@@ -62,8 +63,9 @@ const Chat = ({imie, rola, userid})=>{
 
     return (
         <div>
-          {/* <ChatMessage userid={userid} messages={messages}/> */}
-          {messages && messages.map(msg => <ChatMessage key ={msg.id} message={msg} userid={userid} />)}
+          {/* <ChatMessage userid={userid} messages={messages}/>
+          {messages && messages.map(msg => <ChatMessage key ={msg.id} message={msg} userid={userid} />)} */}
+          <ListOfChatMessages userid={userid} messages={messages}></ListOfChatMessages>
         <form onSubmit={sendMsg}>
           <input value={formValue} onChange={ e => setFormValue(e.target.value)}/>
           <button type="submit">Send</button>

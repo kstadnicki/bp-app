@@ -1,4 +1,4 @@
-// import React from "react";
+import React from "react";
 
 // const ChatMessage =(props)=>{ 
 //      //const messageClass = uid === props.userid ? 'sent' : 'received';
@@ -17,15 +17,15 @@
 
 //   export default ChatMessage;
 
-function ChatMessage(props){
-    const {text, userid} = props.message;
+const ChatMessage = (props)=>{
+    //const {text, userid} = props.message;
   
     // const messageClass = uid === props.userid ? 'sent' : 'received';
-    console.log(props.userid+" "+ userid)
+    //console.log(props.userid+" "+ userid)
     return( 
-        <div className={props.userid=== userid ? 'text-end' : ''} key={props.message.id}>
-            <h6>{props.message.id}</h6>
-            <p>{text}</p>        
+        <div className={props.userid === props.username ? 'text-end' : ''} key={props.id}>
+            <h6>{props.userid}</h6>
+            <p>{props.text}</p>        
         </div>
     //   <div className={`message ${messageClass}`}>
     //     <p>{text}</p>
