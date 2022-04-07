@@ -19,7 +19,7 @@ const Chat = ({imie, rola, userid})=>{
     const getMsgs =async()=>{
         const response = await getDocs(collection(db,"msg"));
         setMessagesCount(response.docs.length);
-        setMessages(response);
+        setMessages(response);             
     }
 
     const listOfMsgs=()=>{
