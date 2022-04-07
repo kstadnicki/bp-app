@@ -23,18 +23,21 @@ const Chat = ({imie, rola, userid})=>{
             const q = query(messagesRef, orderBy("createdAt"));
             const data = await getDocs(q);
             setMessages(data.docs.map((doc) => ({...doc.data(), id: doc.id })));
+            //   onSnapshot(messagesRef,(snapshot)=>{
+            //   setMessages(snapshot.docs.map((msg)=>({...msg.data(), id: msg.id})));
+            //   console.log(messages)
+            // })
         };
         getData();
     } 
 
     useEffect(() => {
+      const q = query(messagesRef, orderBy("createdAt"));
       refresh();
-      const interval = setInterval(() => {
-        refresh();
-      }, 10000);
-      return () => clearInterval(interval);
-    }, []);
-
+      onSnapshot(q,(snapshot)=>{
+        setMessages(snapshot.docs.map((msg)=>({...msg.data(), id: msg.id})));
+      });
+    },[])
     // const q = query(collection(db, "msg"), orderBy('createdAt'), limit(25));
 
     // // const [messages] = async() => { await getDocs(collection(db, "msg"))};
