@@ -1,41 +1,85 @@
-import React from 'react';
-import db from './firebase/firebase.js';
-import { getDocs, collection, doc, setDoc, addDoc, query, orderBy, limit, getDoc } from 'firebase/firestore';
+import React, {useEffect, useState} from 'react';
+import db from '../firebase/firebase.js';
+import firebase from 'firebase/compat/app';
+import { getDocs, collection, doc, setDoc, addDoc, query, orderBy, limit, getDoc, Timestamp } from 'firebase/firestore';
+
+import { useCollectionData } from 'react-firebase-hooks/firestore'
+import { async } from '@firebase/util';
+
 
 const Chat = ({imie, rola, userid})=>{
+    
+    const msgRef = collection(db, "msg");
 
-    const onLoginChange =(event)=>{
-        //setLogin(event.target.value);
-    }
+    // const query = msgRef.orderBy('createdAt').limit(25);
 
-    const onFormSubmit = (event)=>{
-        event.preventDefault();
+    // const [messages] = useCollectionData(query, {idField: 'id'});
 
-    }
-     
-    const response = getDoc(doc(db,"msg","1"));
+    const messagesRef = collection(db, "msg");
+    // const q = query(messagesRef, orderBy("createdAt"), limit(25));
+    // const [messages] = useCollectionData(q, { idField: "id" });
 
-    console.log(response);
+    const [messages, setMessages] = useState([]);
+
+    useEffect( () =>{
+        const getData = async () => {
+            const data = await getDocs(messagesRef);
+            setMessages(data.docs.map((doc) => ({...doc.data(), id: doc.id })));
+        };
+        getData();
+    }, []
+    );
+
+    console.log(messages);
+    // const q = query(collection(db, "msg"), orderBy('createdAt'), limit(25));
+
+    // // const [messages] = async() => { await getDocs(collection(db, "msg"))};
+
+    
+
+    // getDocs(q).then( (querySnapshot) => {querySnapshot.forEach((doc) => {
+    //     // doc.data() is never undefined for query doc snapshots
+    //     console.log(doc.id, " => ", doc.data());
+    //     });}
+    // )
+    
+
+    const [formValue, setFormValue] = useState('');
+
+    const sendMsg = async(e) => {
+        e.preventDefault();
+        await addDoc(collection(db, "msg"), {
+          text: formValue,
+          createdAt: Timestamp.fromDate(new Date()),
+          userid
+        });
+    
+        setFormValue('');
+      }
+
     return (
+        <>
         <div>
-            {/* <div>
-            {isError === true &&
-                <Error Text={errorText} alertType="alert-warning"></Error>
-            }
-            </div > */}
-            <div id="messenger">
-
-            </div>
-
-            <form onSubmit={onFormSubmit}>
-                <label>
-                Wiadomość:
-                <input onChange={onLoginChange} type="text" name="login" />
-                </label>
-                <input type="submit" value="Wyślij" />
-            </form>
+          {messages && messages.map(msg => <ChatMessage key ={msg.id} message={msg} userid={userid} />)}
         </div>
+        <form onSubmit={sendMsg}>
+          <input value={formValue} onChange={ e => setFormValue(e.target.value)}/>
+          <button type="submit">Send</button>
+        </form>
+      </>
     );
 }
+
+function ChatMessage(props){
+    const {text, uid} = props.message;
+  
+    const messageClass = uid === props.userid ? 'sent' : 'received';
+  
+    return( 
+      <div className={`message ${messageClass}`}>
+        <p>{text}</p>
+      </div>
+    )
+  }
 
 export default Chat;
