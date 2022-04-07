@@ -1,15 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import db from '../firebase/firebase.js';
 import firebase from 'firebase/compat/app';
-import { getDocs, collection, doc, setDoc, addDoc, query, orderBy, limit, getDoc, Timestamp } from 'firebase/firestore';
-
-import { useCollectionData } from 'react-firebase-hooks/firestore'
-import { async } from '@firebase/util';
+import { getDocs, collection, doc, setDoc, addDoc, query, orderBy, limit, getDoc, Timestamp, onSnapshot } from 'firebase/firestore';
+import ChatMessage from './ChatMessage.js';
 
 
-const Chat = ({imie, rola, userid})=>{
-    
-    const msgRef = collection(db, "msg");
+const Chat = ({imie, rola, userid})=>{    
 
     // const query = msgRef.orderBy('createdAt').limit(25);
 
@@ -21,26 +17,23 @@ const Chat = ({imie, rola, userid})=>{
 
     const [messages, setMessages] = useState([]);
 
-<<<<<<< HEAD
-    const getMsgs =async()=>{
-        const response = await getDocs(collection(db,"msg"));
-        setMessagesCount(response.docs.length);
-        setMessages(response);             
-    }
-=======
     const refresh = () =>{
         const getData = async () => {
-            const data = await getDocs(messagesRef);
+            const q = query(messagesRef, orderBy("createdAt"));
+            const data = await getDocs(q);
             setMessages(data.docs.map((doc) => ({...doc.data(), id: doc.id })));
         };
         getData();
     } 
->>>>>>> origin/master
 
-    useEffect( refresh, []
-    );
+    useEffect(() => {
+      refresh();
+      const interval = setInterval(() => {
+        refresh();
+      }, 10000);
+      return () => clearInterval(interval);
+    }, []);
 
-    console.log(messages);
     // const q = query(collection(db, "msg"), orderBy('createdAt'), limit(25));
 
     // // const [messages] = async() => { await getDocs(collection(db, "msg"))};
@@ -68,28 +61,26 @@ const Chat = ({imie, rola, userid})=>{
       }
 
     return (
-        <>
         <div>
-          {messages && messages.map(msg => <ChatMessage key ={msg.id} message={msg} userid={userid} />)}
-        </div>
+          <ChatMessage userid={userid} messages={messages}/>
         <form onSubmit={sendMsg}>
           <input value={formValue} onChange={ e => setFormValue(e.target.value)}/>
           <button type="submit">Send</button>
         </form>
-      </>
+        </div>
     );
 }
 
-function ChatMessage(props){
-    const {text, uid} = props.message;
+// function ChatMessage(props){
+//     const {text, uid} = props.message;
   
-    const messageClass = uid === props.userid ? 'sent' : 'received';
+//     const messageClass = uid === props.userid ? 'sent' : 'received';
   
-    return( 
-      <div className={`message ${messageClass}`}>
-        <p>{text}</p>
-      </div>
-    )
-  }
+//     return( 
+//       <div className={`message ${messageClass}`}>
+//         <p>{text}</p>
+//       </div>
+//     )
+//   }
 
 export default Chat;
