@@ -21,13 +21,15 @@ const Chat = ({imie, rola, userid})=>{
 
     const [messages, setMessages] = useState([]);
 
-    useEffect( () =>{
+    const refresh = () =>{
         const getData = async () => {
             const data = await getDocs(messagesRef);
             setMessages(data.docs.map((doc) => ({...doc.data(), id: doc.id })));
         };
         getData();
-    }, []
+    } 
+
+    useEffect( refresh, []
     );
 
     console.log(messages);
@@ -53,7 +55,7 @@ const Chat = ({imie, rola, userid})=>{
           createdAt: Timestamp.fromDate(new Date()),
           userid
         });
-    
+        refresh();
         setFormValue('');
       }
 
