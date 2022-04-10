@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import db from '../firebase/firebase.js';
 import firebase from 'firebase/compat/app';
-import { getDocs, collection, doc, setDoc, addDoc, query, orderBy, limit, getDoc, Timestamp, onSnapshot } from 'firebase/firestore';
+import { getDocs, collection, doc, setDoc, addDoc, query, orderBy, limit, getDoc, Timestamp, onSnapshot, where } from 'firebase/firestore';
 import ChatMessage from './ChatMessage.js';
 import ListOfChatMessages from './ListOfChatMessages';
 
@@ -13,16 +13,23 @@ const Chat = ({imie, rola, userid})=>{
     // const [messages] = useCollectionData(query, {idField: 'id'});
 
     const messagesRef = collection(db, "msg");
+    const chatsRef = collection(db, "rooms");
     // const q = query(messagesRef, orderBy("createdAt"), limit(25));
     // const [messages] = useCollectionData(q, { idField: "id" });
 
-    const [messages, setMessages] = useState([]);
+    const [messages, setMessages] = useState([]); // all messages ordered by date
 
-    const refresh = () =>{
+    const [listOfMessages, setList] = useState([]); // chat specific messages
+
+    const [currentChat, setCurrentChat] = useState("all"); // current chat id
+
+    const [chats, setChats] = useState([]); // all chats
+
+    const refresh = () =>{ // set or refresh all messages
         const getData = async () => {
-            const q = query(messagesRef, orderBy("createdAt"));
-            const data = await getDocs(q);
-            setMessages(data.docs.map((doc) => ({...doc.data(), id: doc.id })));
+          const q = query(messagesRef, where("chat", "==", currentChat) ,orderBy("createdAt"));
+          const data = await getDocs(q);
+          setMessages(data.docs.map((doc) => ({...doc.data(), id: doc.id })));
             //   onSnapshot(messagesRef,(snapshot)=>{
             //   setMessages(snapshot.docs.map((msg)=>({...msg.data(), id: msg.id})));
             //   console.log(messages)
@@ -31,9 +38,19 @@ const Chat = ({imie, rola, userid})=>{
         getData();
     } 
 
+    const getChats = () =>{ // set or refresh all messages
+      const getData = async () => {
+        const q = query(chatsRef);
+        const data = await getDocs(q);
+        setChats(data.docs.map((doc) => ({...doc.data(), id: doc.id })));
+      };
+      getData();
+  } 
+
     useEffect(() => {
       const q = query(messagesRef, orderBy("createdAt"));
       refresh();
+      getChats();
       onSnapshot(q,(snapshot)=>{
         setMessages(snapshot.docs.map((msg)=>({...msg.data(), id: msg.id})));
       });
@@ -56,6 +73,7 @@ const Chat = ({imie, rola, userid})=>{
     const sendMsg = async(e) => {
         e.preventDefault();
         await addDoc(collection(db, "msg"), {
+          chat: currentChat,
           text: formValue,
           createdAt: Timestamp.fromDate(new Date()),
           userid
@@ -64,15 +82,29 @@ const Chat = ({imie, rola, userid})=>{
         setFormValue('');
       }
 
+      const changeChatRoom = async(e) => {
+        e.preventDefault();
+        setCurrentChat(e.target.value);
+        refresh();
+        setFormValue('');
+      }
+
+      const addButton = (el) => {
+        return (
+          <button value={el.id} onClick={changeChatRoom}>{el.id}</button>
+        );
+      }
+
     return (
         <div>
-          {/* <ChatMessage userid={userid} messages={messages}/>
-          {messages && messages.map(msg => <ChatMessage key ={msg.id} message={msg} userid={userid} />)} */}
+          {/* <script>chats.forEach(addButton);</script>  TODO: loop button creation from chats*/}
+          <button value="all" onClick={changeChatRoom}>all</button>
+          <button value="admin" onClick={changeChatRoom}>admin</button>
           <ListOfChatMessages userid={userid} messages={messages}></ListOfChatMessages>
-        <form onSubmit={sendMsg}>
-          <input value={formValue} onChange={ e => setFormValue(e.target.value)}/>
-          <button type="submit">Send</button>
-        </form>
+          <form onSubmit={sendMsg}>
+            <input value={formValue} onChange={ e => setFormValue(e.target.value)}/>
+            <button type="submit">Send</button>
+          </form>
         </div>
     );
 }
