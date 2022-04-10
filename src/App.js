@@ -5,6 +5,7 @@ import WelcomeScreen from "./components/WelcomeScreen.js";
 import db from './firebase/firebase.js';
 import { getDocs, collection, doc, setDoc, addDoc, query, orderBy, limit, getDoc } from 'firebase/firestore';
 import Error from './components/error.js'
+import './global.css'
 
 const App = ()=> {
 

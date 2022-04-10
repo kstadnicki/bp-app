@@ -2,8 +2,9 @@ import React, {useEffect, useState} from 'react';
 import db from '../firebase/firebase.js';
 import firebase from 'firebase/compat/app';
 import { getDocs, collection, doc, setDoc, addDoc, query, orderBy, limit, getDoc, Timestamp, onSnapshot, where } from 'firebase/firestore';
-import ChatMessage from './ChatMessage.js';
+//import ChatMessage from './ChatMessage.js';
 import ListOfChatMessages from './ListOfChatMessages';
+import ListOfChatButtons from './ListOfChatButtons.js';
 
 
 const Chat = ({imie, rola, userid})=>{    
@@ -48,13 +49,24 @@ const Chat = ({imie, rola, userid})=>{
   } 
 
     useEffect(() => {
-      const q = query(messagesRef, orderBy("createdAt"));
-      refresh();
+      const q = query(messagesRef,where("chat", "==", currentChat), orderBy("createdAt"));
+      //refresh();
+      console.log("done")
       getChats();
       onSnapshot(q,(snapshot)=>{
         setMessages(snapshot.docs.map((msg)=>({...msg.data(), id: msg.id})));
       });
     },[])
+
+    useEffect(() => {
+      //const q = query(messagesRef, orderBy("createdAt"));
+      console.log("hit")
+      refresh();
+      getChats();
+      // onSnapshot(q,(snapshot)=>{
+      //   setMessages(snapshot.docs.map((msg)=>({...msg.data(), id: msg.id})));
+      // });
+    },[currentChat])
     // const q = query(collection(db, "msg"), orderBy('createdAt'), limit(25));
 
     // // const [messages] = async() => { await getDocs(collection(db, "msg"))};
@@ -82,10 +94,10 @@ const Chat = ({imie, rola, userid})=>{
         setFormValue('');
       }
 
-      const changeChatRoom = async(e) => {
-        e.preventDefault();
-        setCurrentChat(e.target.value);
-        refresh();
+      const changeChatRoom = (chatID) => {
+        setCurrentChat(chatID);
+        console.log(chatID)
+        //refresh();
         setFormValue('');
       }
 
@@ -96,14 +108,15 @@ const Chat = ({imie, rola, userid})=>{
       }
 
     return (
-        <div>
+        <div className="container-lg">
           {/* <script>chats.forEach(addButton);</script>  TODO: loop button creation from chats*/}
-          <button value="all" onClick={changeChatRoom}>all</button>
-          <button value="admin" onClick={changeChatRoom}>admin</button>
+          {/* <button value="all" onClick={changeChatRoom}>all</button>
+          <button value="admin" onClick={changeChatRoom}>admin</button> */}
+          <ListOfChatButtons chats={chats} changeChatRoom={changeChatRoom}></ListOfChatButtons>
           <ListOfChatMessages userid={userid} messages={messages}></ListOfChatMessages>
-          <form onSubmit={sendMsg}>
+          <form style={{clear:"both"}} onSubmit={sendMsg}>
             <input value={formValue} onChange={ e => setFormValue(e.target.value)}/>
-            <button type="submit">Send</button>
+            <button className="btn btn-success" type="submit">Send</button>
           </form>
         </div>
     );
