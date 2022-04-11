@@ -31,21 +31,26 @@ const LoginForm = (props) =>{
     }
 
     return (
-      <div>
-        {isError === true &&
+      <div style={{padding:"5rem", backgroundColor:"#222", maxWidth:"500px", borderRadius:"5rem"}} className="d-flex justify-content-center container-sm shadow">
+      <div>  
+        {isError === true &&     
        <Error Text={errorText} alertType="alert-warning"></Error>
       }
       <form onSubmit={onFormSubmit}>
-        <label>
+        <div>
+        <label className="form-label fs-5 text-center">
           Login:
-          <input onChange={onLoginChange} type="text" name="login" />
+          <input className="form-control shadow-sm" onChange={onLoginChange} type="text" name="login" />
         </label>
-        <label>
+        </div>
+        <label className="form-label fs-5 text-center">
           Hasło:
-          <input  onChange={onPasswordChange} type="password" name="password" />
+          <input className="form-control shadow-sm" onChange={onPasswordChange} type="password" name="password" />
         </label>
-        <input type="submit" value="Wyślij" />
+        <br />
+        <button style={{width:"100%", marginTop:"3rem"}} type="submit" value="Wyślij" className="btn btn-primary shadow">Zaloguj</button>
       </form>
+      </div>
       </div>
     );
 }

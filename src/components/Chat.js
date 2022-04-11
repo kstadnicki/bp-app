@@ -110,16 +110,18 @@ const Chat = ({imie, rola, userid})=>{
       }
 
     return (
-        <div className="container-lg">
+        <div className="container-md">
           {/* <script>chats.forEach(addButton);</script>  TODO: loop button creation from chats*/}
           {/* <button value="all" onClick={changeChatRoom}>all</button>
           <button value="admin" onClick={changeChatRoom}>admin</button> */}
           <ListOfChatButtons activeChat={currentChat} chats={chats} changeChatRoom={changeChatRoom}></ListOfChatButtons>
           <ListOfChatMessages userid={userid} messages={messages}></ListOfChatMessages>
+          <div style={{borderRadius:"5rem"}}>
           <form className="input-group mb-3" style={{clear:"both", marginTop:"5rem"}} onSubmit={sendMsg}>
             <input style={{color:"#fff"}} className="form-control bg-secondary border-0" value={formValue} onChange={ e => setFormValue(e.target.value)}/>
             <button className="btn btn-primary" type="submit">Wyślij <i className="fa-solid fa-paper-plane"></i></button>
           </form>
+          </div>
         </div>
     );
 }

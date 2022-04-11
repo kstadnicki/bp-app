@@ -40,13 +40,12 @@ const App = ()=> {
   }
   if(isLoggedIn === false)
   return (
-  <h1>
-    Hello!  
+  <p> 
     {isError === true &&
        <Error Text={errorText} alertType="alert-danger"></Error>
       }
     <LoginForm onSubmit={Login}></LoginForm>  
-  </h1>
+  </p>
   );
   if(isLoggedIn === true)
   return(<WelcomeScreen imie={userName} rola={role} userid = {userid}/>)
