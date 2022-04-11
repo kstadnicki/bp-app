@@ -56,18 +56,18 @@ const Chat = ({imie, rola, userid})=>{
       onSnapshot(q,(snapshot)=>{
         setMessages(snapshot.docs.map((msg)=>({...msg.data(), id: msg.id})));
       });
-    },[])
-
-    useEffect(() => {
-      //const q = query(messagesRef, orderBy("createdAt"));
-      console.log("hit")
-      refresh();
-      getChats();
-      // onSnapshot(q,(snapshot)=>{
-      //   setMessages(snapshot.docs.map((msg)=>({...msg.data(), id: msg.id})));
-      // });
     },[currentChat])
-    // const q = query(collection(db, "msg"), orderBy('createdAt'), limit(25));
+
+    // useEffect(() => {
+    //   //const q = query(messagesRef, orderBy("createdAt"));
+    //   console.log("hit")
+    //   refresh();
+    //   getChats();
+    //   // onSnapshot(q,(snapshot)=>{
+    //   //   setMessages(snapshot.docs.map((msg)=>({...msg.data(), id: msg.id})));
+    //   // });
+    // },[currentChat])
+    // // const q = query(collection(db, "msg"), orderBy('createdAt'), limit(25));
 
     // // const [messages] = async() => { await getDocs(collection(db, "msg"))};
 
