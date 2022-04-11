@@ -5,7 +5,8 @@ import WelcomeScreen from "./components/WelcomeScreen.js";
 import db from './firebase/firebase.js';
 import { getDocs, collection, doc, setDoc, addDoc, query, orderBy, limit, getDoc } from 'firebase/firestore';
 import Error from './components/error.js'
-import './global.css'
+import './global.css';
+import logo from './logo.png'
 
 const App = ()=> {
 
@@ -40,16 +41,23 @@ const App = ()=> {
   }
   if(isLoggedIn === false)
   return (
+  <div>
+  <img style={{maxWidth:"200px"}} className="rounded" src={logo}></img>
   <p> 
     {isError === true &&
        <Error Text={errorText} alertType="alert-danger"></Error>
       }
     <LoginForm onSubmit={Login}></LoginForm>  
   </p>
+  </div>
   );
   if(isLoggedIn === true)
-  return(<WelcomeScreen imie={userName} rola={role} userid = {userid}/>)
-  
+  return(
+  <div>
+  <img style={{maxWidth:"200px"}} className="rounded" src={logo}></img>
+  <WelcomeScreen imie={userName} rola={role} userid = {userid}/>
+  </div>
+  )  
 }
 
 export default App;
