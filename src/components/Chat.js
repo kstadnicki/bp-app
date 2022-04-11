@@ -84,6 +84,7 @@ const Chat = ({imie, rola, userid})=>{
 
     const sendMsg = async(e) => {
         e.preventDefault();
+        if(formValue !== ""){
         await addDoc(collection(db, "msg"), {
           chat: currentChat,
           text: formValue,
@@ -92,6 +93,7 @@ const Chat = ({imie, rola, userid})=>{
         });
         refresh();
         setFormValue('');
+      }
       }
 
       const changeChatRoom = (chatID) => {
@@ -112,11 +114,11 @@ const Chat = ({imie, rola, userid})=>{
           {/* <script>chats.forEach(addButton);</script>  TODO: loop button creation from chats*/}
           {/* <button value="all" onClick={changeChatRoom}>all</button>
           <button value="admin" onClick={changeChatRoom}>admin</button> */}
-          <ListOfChatButtons chats={chats} changeChatRoom={changeChatRoom}></ListOfChatButtons>
+          <ListOfChatButtons activeChat={currentChat} chats={chats} changeChatRoom={changeChatRoom}></ListOfChatButtons>
           <ListOfChatMessages userid={userid} messages={messages}></ListOfChatMessages>
-          <form style={{clear:"both"}} onSubmit={sendMsg}>
-            <input value={formValue} onChange={ e => setFormValue(e.target.value)}/>
-            <button className="btn btn-success" type="submit">Send</button>
+          <form className="input-group mb-3" style={{clear:"both", marginTop:"5rem"}} onSubmit={sendMsg}>
+            <input style={{color:"#fff"}} className="form-control bg-secondary border-0" value={formValue} onChange={ e => setFormValue(e.target.value)}/>
+            <button className="btn btn-primary" type="submit">Wyślij <i className="fa-solid fa-paper-plane"></i></button>
           </form>
         </div>
     );

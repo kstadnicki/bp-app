@@ -23,9 +23,11 @@ const ChatMessage = (props)=>{
     // const messageClass = uid === props.userid ? 'sent' : 'received';
     //console.log(props.userid+" "+ userid)
     return( 
-        <div style={{borderRadius:"25px", padding:".5rem", marginBottom:"1rem", maxWidth:"20rem", clear:"both"}} className={props.userid === props.username ? 'text-end bg-primary float-end' : 'bg-secondary'} key={props.id}>
-            <h5>{props.userid}</h5>
-            <p>{props.text}</p>        
+        <div style={{borderRadius:"25px", padding:".5rem", marginBottom:"0.2rem", maxWidth:"20rem", clear:"both"}} className={props.userid === props.username ? 'text-end bg-primary float-end' : 'bg-secondary'} key={props.id}>
+                {props.userid === props.username ? null : <h6 className="bg-primary" style={{display:"inline", borderRadius:"25px", padding:".5rem", marginLeft:"-.45rem"}}>{props.userid}:</h6>  } 
+                <p style={{display:"inline"}}>{" "+ props.text}</p>
+            
+                 
         </div>
     //   <div className={`message ${messageClass}`}>
     //     <p>{text}</p>

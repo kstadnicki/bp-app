@@ -4,7 +4,7 @@ import ChatButton from './chatButton'
 const ListOfChatButtons = (props)=>{
     if(props.chats){
         const chatsList = props.chats.map((room)=>(
-           <ChatButton key={room.id} room={room.id} changeChatRoom={props.changeChatRoom}/>
+           <ChatButton activeChat={props.activeChat} key={room.id} room={room.id} changeChatRoom={props.changeChatRoom}/>
         ))    
   
   return(
