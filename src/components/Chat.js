@@ -82,7 +82,7 @@ const Chat = ({imie, rola, userid})=>{
         setFormValue('');
       }
 
-      const changeChatRoom = async(e) => {
+      const changeChatRoom = (e) => {
         e.preventDefault();
         setCurrentChat(e.target.value);
         refresh();
