@@ -96,17 +96,10 @@ const Chat = ({imie, rola, userid})=>{
       }
       }
 
-<<<<<<< HEAD
-      const changeChatRoom = (e) => {
-        e.preventDefault();
-        setCurrentChat(e.target.value);
-        refresh();
-=======
       const changeChatRoom = (chatID) => {
         setCurrentChat(chatID);
         console.log(chatID)
         //refresh();
->>>>>>> 538af9cbdd1bc90bc4356cae3a56dc5b03530c97
         setFormValue('');
       }
 
@@ -118,9 +111,6 @@ const Chat = ({imie, rola, userid})=>{
 
     return (
         <div className="container-md">
-          {/* <script>chats.forEach(addButton);</script>  TODO: loop button creation from chats*/}
-          {/* <button value="all" onClick={changeChatRoom}>all</button>
-          <button value="admin" onClick={changeChatRoom}>admin</button> */}
           <ListOfChatButtons activeChat={currentChat} chats={chats} changeChatRoom={changeChatRoom}></ListOfChatButtons>
           <ListOfChatMessages userid={userid} messages={messages}></ListOfChatMessages>
           <div style={{borderRadius:"5rem"}}>
@@ -132,17 +122,5 @@ const Chat = ({imie, rola, userid})=>{
         </div>
     );
 }
-
-// function ChatMessage(props){
-//     const {text, uid} = props.message;
-  
-//     const messageClass = uid === props.userid ? 'sent' : 'received';
-  
-//     return( 
-//       <div className={`message ${messageClass}`}>
-//         <p>{text}</p>
-//       </div>
-//     )
-//   }
 
 export default Chat;

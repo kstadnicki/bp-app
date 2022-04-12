@@ -7,6 +7,8 @@ import { getDocs, collection, doc, setDoc, addDoc, query, orderBy, limit, getDoc
 import Error from './components/error.js'
 import './global.css';
 import logo from './logo.png'
+import ListOfChatButtons from './components/ListOfChatButtons.js';
+import Chat from './components/Chat';
 
 const App = ()=> {
 
@@ -16,7 +18,13 @@ const App = ()=> {
     const [isError,setIsError] = useState(false);
     const [errorText, setErrorText] = useState("");
     const [userid, setUserID] = useState(null);
+    const [currentView, setCurrentView] = useState("home");
+    const [chats] = useState([{ home: "home", id: "home"}, {home: "chat", id:"chat"} ]); // all chats
 
+    const changeChatRoom = (chatID) => {
+      setCurrentView(chatID);
+      console.log(chatID)
+    }
 
     const Login = async(login,password)=>{
       const response = await getDoc(doc(db,"users",login));
@@ -29,11 +37,11 @@ const App = ()=> {
       if(response._document.data.value.mapValue.fields.password.stringValue === password){
           setUserName(response._document.data.value.mapValue.fields.imie.stringValue);
           //console.log(response._document.data.value);
-          console.log("id " + login);
+          // console.log("id " + login);
           setUserID(login);
-          console.log("id " + userid);
+          // console.log("id " + userid);
           setRole(response._document.data.value.mapValue.fields.rola.stringValue);
-          console.log(role);
+          // console.log(role);
           setIsLoggedIn(true);
       }
       if(response._document.data.value.mapValue.fields.password.stringValue !== password)
@@ -43,21 +51,36 @@ const App = ()=> {
   return (
   <div>
   <img style={{maxWidth:"200px"}} className="rounded" src={logo}></img>
-  <p> 
     {isError === true &&
        <Error Text={errorText} alertType="alert-danger"></Error>
       }
     <LoginForm onSubmit={Login}></LoginForm>  
-  </p>
   </div>
   );
   if(isLoggedIn === true)
-  return(
-  <div>
-  <img style={{maxWidth:"200px"}} className="rounded" src={logo}></img>
-  <WelcomeScreen imie={userName} rola={role} userid = {userid}/>
-  </div>
-  )  
+  switch (currentView) {
+    case "chat":
+      return(
+        <div>
+        <img style={{maxWidth:"200px"}} className="rounded" src={logo}></img>
+        <ListOfChatButtons activeChat={currentView} chats={chats} changeChatRoom={changeChatRoom}></ListOfChatButtons>
+        <Chat imie={userName} rola={role} userid = {userid}></Chat>  
+        {/* <WelcomeScreen imie={userName} rola={role} userid = {userid}/> */}
+        </div>
+        ) 
+      break;
+  
+    default:
+      return(
+        <div>
+        <img style={{maxWidth:"200px"}} className="rounded" src={logo}></img>
+        <ListOfChatButtons activeChat={currentView} chats={chats} changeChatRoom={changeChatRoom}></ListOfChatButtons>
+        <WelcomeScreen imie={userName} rola={role} userid = {userid}/>
+        </div>
+        ) 
+      break;
+  }
+ 
 }
 
 export default App;
