@@ -2,8 +2,9 @@ import React, {useEffect, useState} from 'react';
 import db from '../firebase/firebase.js';
 import firebase from 'firebase/compat/app';
 import { getDocs, collection, doc, setDoc, addDoc, query, orderBy, limit, getDoc, Timestamp, onSnapshot, where } from 'firebase/firestore';
-import ChatMessage from './ChatMessage.js';
+//import ChatMessage from './ChatMessage.js';
 import ListOfChatMessages from './ListOfChatMessages';
+import ListOfChatButtons from './ListOfChatButtons.js';
 
 
 const Chat = ({imie, rola, userid})=>{    
@@ -48,14 +49,25 @@ const Chat = ({imie, rola, userid})=>{
   } 
 
     useEffect(() => {
-      const q = query(messagesRef, orderBy("createdAt"));
-      refresh();
+      const q = query(messagesRef,where("chat", "==", currentChat), orderBy("createdAt"));
+      //refresh();
+      console.log("done")
       getChats();
       onSnapshot(q,(snapshot)=>{
         setMessages(snapshot.docs.map((msg)=>({...msg.data(), id: msg.id})));
       });
-    },[])
-    // const q = query(collection(db, "msg"), orderBy('createdAt'), limit(25));
+    },[currentChat])
+
+    // useEffect(() => {
+    //   //const q = query(messagesRef, orderBy("createdAt"));
+    //   console.log("hit")
+    //   refresh();
+    //   getChats();
+    //   // onSnapshot(q,(snapshot)=>{
+    //   //   setMessages(snapshot.docs.map((msg)=>({...msg.data(), id: msg.id})));
+    //   // });
+    // },[currentChat])
+    // // const q = query(collection(db, "msg"), orderBy('createdAt'), limit(25));
 
     // // const [messages] = async() => { await getDocs(collection(db, "msg"))};
 
@@ -72,6 +84,7 @@ const Chat = ({imie, rola, userid})=>{
 
     const sendMsg = async(e) => {
         e.preventDefault();
+        if(formValue !== ""){
         await addDoc(collection(db, "msg"), {
           chat: currentChat,
           text: formValue,
@@ -81,11 +94,19 @@ const Chat = ({imie, rola, userid})=>{
         refresh();
         setFormValue('');
       }
+      }
 
+<<<<<<< HEAD
       const changeChatRoom = (e) => {
         e.preventDefault();
         setCurrentChat(e.target.value);
         refresh();
+=======
+      const changeChatRoom = (chatID) => {
+        setCurrentChat(chatID);
+        console.log(chatID)
+        //refresh();
+>>>>>>> 538af9cbdd1bc90bc4356cae3a56dc5b03530c97
         setFormValue('');
       }
 
@@ -96,15 +117,18 @@ const Chat = ({imie, rola, userid})=>{
       }
 
     return (
-        <div>
+        <div className="container-md">
           {/* <script>chats.forEach(addButton);</script>  TODO: loop button creation from chats*/}
-          <button value="all" onClick={changeChatRoom}>all</button>
-          <button value="admin" onClick={changeChatRoom}>admin</button>
+          {/* <button value="all" onClick={changeChatRoom}>all</button>
+          <button value="admin" onClick={changeChatRoom}>admin</button> */}
+          <ListOfChatButtons activeChat={currentChat} chats={chats} changeChatRoom={changeChatRoom}></ListOfChatButtons>
           <ListOfChatMessages userid={userid} messages={messages}></ListOfChatMessages>
-          <form onSubmit={sendMsg}>
-            <input value={formValue} onChange={ e => setFormValue(e.target.value)}/>
-            <button type="submit">Send</button>
+          <div style={{borderRadius:"5rem"}}>
+          <form className="input-group mb-3" style={{clear:"both", marginTop:"5rem"}} onSubmit={sendMsg}>
+            <input style={{color:"#fff"}} className="form-control bg-secondary border-0" value={formValue} onChange={ e => setFormValue(e.target.value)}/>
+            <button className="btn btn-primary" type="submit">Wyślij <i className="fa-solid fa-paper-plane"></i></button>
           </form>
+          </div>
         </div>
     );
 }
