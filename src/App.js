@@ -21,9 +21,9 @@ const App = ()=> {
     const [currentView, setCurrentView] = useState("home");
     const [chats] = useState([{ home: "home", id: "home"}, {home: "chat", id:"chat"} ]); // all chats
 
-    const changeChatRoom = (chatID) => {
-      setCurrentView(chatID);
-      console.log(chatID)
+    const changeView = (view) => {
+      setCurrentView(view);
+      // console.log(view)
     }
 
     const Login = async(login,password)=>{
@@ -63,7 +63,7 @@ const App = ()=> {
       return(
         <div>
         <img style={{maxWidth:"200px"}} className="rounded" src={logo}></img>
-        <ListOfChatButtons activeChat={currentView} chats={chats} changeChatRoom={changeChatRoom}></ListOfChatButtons>
+        <ListOfChatButtons activeChat={currentView} chats={chats} changeChatRoom={changeView}></ListOfChatButtons>
         <Chat imie={userName} rola={role} userid = {userid}></Chat>  
         {/* <WelcomeScreen imie={userName} rola={role} userid = {userid}/> */}
         </div>
@@ -74,7 +74,7 @@ const App = ()=> {
       return(
         <div>
         <img style={{maxWidth:"200px"}} className="rounded" src={logo}></img>
-        <ListOfChatButtons activeChat={currentView} chats={chats} changeChatRoom={changeChatRoom}></ListOfChatButtons>
+        <ListOfChatButtons activeChat={currentView} chats={chats} changeChatRoom={changeView}></ListOfChatButtons>
         <WelcomeScreen imie={userName} rola={role} userid = {userid}/>
         </div>
         ) 
