@@ -1,0 +1,14 @@
+.outer-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    background-color: aliceblue;
+}
+
+.inner-container {
+    display: flex;
+    flex: 1 0 14.6%; /* explanation below */
+    margin: 5px;
+    height: 100px;
+    /* flex-direction: row; */
+}
