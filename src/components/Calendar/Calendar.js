@@ -2,7 +2,7 @@ import { map } from '@firebase/util';
 import React, {useEffect, useState} from 'react';
 import '../../Styles/calendar.css';
 
-const Chat = ({imie, rola, userid})=>{    
+const Calendar = ({imie, rola, userid})=>{    
 
     const currentDate = new Date(); 
     const first = new Date(currentDate.getFullYear() ,currentDate.getMonth(),1); 
