@@ -9,6 +9,7 @@ import './global.css';
 import logo from './logo.png'
 import ListOfChatButtons from './components/ListOfChatButtons.js';
 import Chat from './components/Chat';
+import Header from './components/header.js'
 
 const App = ()=> {
 
@@ -50,7 +51,6 @@ const App = ()=> {
   if(isLoggedIn === false)
   return (
   <div>
-  <img style={{maxWidth:"200px"}} className="rounded" src={logo}></img>
     {isError === true &&
        <Error Text={errorText} alertType="alert-danger"></Error>
       }
@@ -62,10 +62,11 @@ const App = ()=> {
     case "chat":
       return(
         <div>
-        <img style={{maxWidth:"200px"}} className="rounded" src={logo}></img>
-        <ListOfChatButtons activeChat={currentView} chats={chats} changeChatRoom={changeView}></ListOfChatButtons>
-        <Chat imie={userName} rola={role} userid = {userid}></Chat>  
-        {/* <WelcomeScreen imie={userName} rola={role} userid = {userid}/> */}
+          <Header activeChat={currentView} chats={chats} changeView={changeView}></Header>
+          <WelcomeScreen imie={userName} rola={role} userid = {userid}/>
+        {/* <ListOfChatButtons activeChat={currentView} chats={chats} changeChatRoom={changeView}></ListOfChatButtons> */}
+          <Chat imie={userName} rola={role} userid = {userid}></Chat>  
+       
         </div>
         ) 
       break;
@@ -73,9 +74,8 @@ const App = ()=> {
     default:
       return(
         <div>
-        <img style={{maxWidth:"200px"}} className="rounded" src={logo}></img>
-        <ListOfChatButtons activeChat={currentView} chats={chats} changeChatRoom={changeView}></ListOfChatButtons>
-        <WelcomeScreen imie={userName} rola={role} userid = {userid}/>
+          <Header activeChat={currentView} chats={chats} changeView={changeView}></Header>
+          <WelcomeScreen imie={userName} rola={role} userid = {userid}/>
         </div>
         ) 
       break;
