@@ -63,7 +63,7 @@ const Calendar = ()=>{
     }
 
     const week2 = tempDays.map((number) =>(
-        <Day currentDate={currentDate} isCurrentMonth={number < 20 ? false : true} dayNumber={number}></Day>
+        <Day currentDate={currentDate} isCurrentMonth={number < 20 ? true : false} dayNumber={number}></Day>
     ))
 
     tempDays = [];
@@ -134,7 +134,7 @@ const Calendar = ()=>{
             tempDays.push(nextMonthDays);
 
         week5 = tempDays.map((number) =>(
-            <Day currentDate={currentDate} isCurrentMonth={number > 10 ? true : false} dayNumber={number}></Day>
+            <Day currentDate={currentDate} isCurrentMonth={number > 14 ? true : false} dayNumber={number}></Day>
         ))
 
         tempDays = [];
@@ -144,7 +144,7 @@ const Calendar = ()=>{
         }
 
         week6 = tempDays.map((number) =>(
-            <Day currentDate={currentDate} isCurrentMonth={number > 7 ? true : false} dayNumber={number}></Day>
+            <Day currentDate={currentDate} isCurrentMonth={number > 14 ? true : false} dayNumber={number}></Day>
         ))
     }
 
@@ -152,7 +152,7 @@ const Calendar = ()=>{
     // props.chats.map((room)=>(
     //     <ChatButton activeChat={props.activeChat} key={room.id} room={room.id} changeChatRoom={props.changeChatRoom}/>
     //  ))    
-
+    console.log(week1)
     return (
         <div className="container-md">
             <h1>{month}</h1>
