@@ -2,7 +2,7 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    background-color: aliceblue;
+    background-color: rgb(34,34,34);
 }
 
 .inner-container {

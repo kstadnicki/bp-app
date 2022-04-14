@@ -8,7 +8,7 @@ const Header = (props) =>{
     <div className="d-flex flex-row" style={{maxHeight:"100px", backgroundColor:"red", marginBottom:"2rem"}}>
         <div className="d-flex flex-row">
         <p><img src={logo} style={{maxHeight:"100px", marginBottom:"1rem", borderRadius:"20px"}}></img></p>
-        <div style={{position:"absolute", right:"20rem", top:"3rem"}}>
+        <div style={{position:"absolute", right:"15rem", top:"3rem"}}>
         <ListOfChatButtons activeChat={props.currentView} chats={props.chats} changeChatRoom={props.changeView}></ListOfChatButtons>
         </div>
         </div>

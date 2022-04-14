@@ -1,16 +1,17 @@
 import { map } from '@firebase/util';
 import React, {useEffect, useState} from 'react';
 import '../../Styles/calendar.css';
+import Day from "./Day";
 
-const Calendar = ({imie, rola, userid})=>{    
+const Calendar = ()=>{    
 
     const currentDate = new Date(); 
+    //const currentDate = new Date(currentDate2.getFullYear() ,currentDate2.getMonth(),1);
     const first = new Date(currentDate.getFullYear() ,currentDate.getMonth(),1); 
     const previousDate = new Date(currentDate.getFullYear(),currentDate.getMonth(),0); 
     const nextDate = new Date(currentDate.getFullYear(),currentDate.getMonth()+1,0); 
     const day = first.getDay() == 0 ? 7 : first.getDay(); // number of the day of the week represented by a number in range 1 - monday to 7 sunday
     var month = currentDate.toLocaleString('default', { month: 'long' });
-
 
     month = month.charAt(0).toUpperCase() + month.slice(1);
         var tempDays = [];
@@ -52,7 +53,7 @@ const Calendar = ({imie, rola, userid})=>{
             }
         }
     const week1 = tempDays.map((number) =>(
-        <div>{number}</div>
+        <Day currentDate={currentDate} isCurrentMonth={number > 7 ? false : true} dayNumber={number}></Day>
      ))
 
     tempDays = [];
@@ -62,7 +63,7 @@ const Calendar = ({imie, rola, userid})=>{
     }
 
     const week2 = tempDays.map((number) =>(
-        <div>{number}</div>
+        <Day currentDate={currentDate} isCurrentMonth={number < 20 ? false : true} dayNumber={number}></Day>
     ))
 
     tempDays = [];
@@ -72,7 +73,7 @@ const Calendar = ({imie, rola, userid})=>{
     }
 
     const week3 = tempDays.map((number) =>(
-        <div>{number}</div>
+        <Day currentDate={currentDate} isCurrentMonth={true} dayNumber={number}></Day>
     ))
 
     tempDays = [];
@@ -82,7 +83,7 @@ const Calendar = ({imie, rola, userid})=>{
     }
 
     const week4 = tempDays.map((number) =>(
-        <div>{number}</div>
+        <Day currentDate={currentDate} isCurrentMonth={true} dayNumber={number}></Day>
     ))
 
     tempDays = [];
@@ -104,7 +105,7 @@ const Calendar = ({imie, rola, userid})=>{
         }
     
         week5 = tempDays.map((number) =>(
-            <div>{number}</div>
+            <Day currentDate={currentDate} isCurrentMonth={number > 10 ? true : false} dayNumber={number}></Day>
         ))
 
         tempDays = [];
@@ -119,7 +120,7 @@ const Calendar = ({imie, rola, userid})=>{
             tempDays.push(nextMonthDays);
 
         week6 = tempDays.map((number) =>(
-            <div>{number}</div>
+            <Day currentDate={currentDate} isCurrentMonth={number > 7 ? true : false} dayNumber={number}></Day>
         ))
 
     }else{
@@ -133,7 +134,7 @@ const Calendar = ({imie, rola, userid})=>{
             tempDays.push(nextMonthDays);
 
         week5 = tempDays.map((number) =>(
-            <div>{number}</div>
+            <Day currentDate={currentDate} isCurrentMonth={number > 10 ? true : false} dayNumber={number}></Day>
         ))
 
         tempDays = [];
@@ -143,7 +144,7 @@ const Calendar = ({imie, rola, userid})=>{
         }
 
         week6 = tempDays.map((number) =>(
-            <div>{number}</div>
+            <Day currentDate={currentDate} isCurrentMonth={number > 7 ? true : false} dayNumber={number}></Day>
         ))
     }
 
@@ -153,7 +154,7 @@ const Calendar = ({imie, rola, userid})=>{
     //  ))    
 
     return (
-        <div>
+        <div className="container-md">
             <h1>{month}</h1>
             <div className="outer-container">
                 <div className="inner-container">{week1}</div>
@@ -167,4 +168,4 @@ const Calendar = ({imie, rola, userid})=>{
     );
 }
 
-export default Chat;
+export default Calendar;
