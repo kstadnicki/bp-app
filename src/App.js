@@ -10,10 +10,12 @@ import logo from './logo.png'
 import ListOfChatButtons from './components/ListOfChatButtons.js';
 import Chat from './components/Chat';
 import Header from './components/header.js'
+import Modal from './components/Modal'
 
 const App = ()=> {
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [userName, setUserName] = useState(null);
     const [role,setRole]= useState(null);
     const [isError,setIsError] = useState(false);
@@ -48,9 +50,22 @@ const App = ()=> {
       if(response._document.data.value.mapValue.fields.password.stringValue !== password)
           setIsLoggedIn(false);
   }
+
+  const toggleModal=()=>{
+    setIsModalOpen(!isModalOpen);
+  }
+
+  const modalSubmit=()=>{
+    alert("MODAL SUBMITED");
+  }
+
   if(isLoggedIn === false)
-  return (
+  return (    
   <div>
+      <button className="btn btn-primary" onClick={toggleModal}>ToggleModal</button>
+  {isModalOpen &&
+     <Modal toggleModal={toggleModal} modalSubmit={modalSubmit}></Modal>
+   } 
     {isError === true &&
        <Error Text={errorText} alertType="alert-danger"></Error>
       }
