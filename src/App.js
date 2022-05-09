@@ -11,6 +11,7 @@ import ListOfChatButtons from './components/ListOfChatButtons.js';
 import Chat from './components/Chat';
 import Header from './components/header.js'
 import Modal from './components/Modal'
+import UsersAdminPanel from './components/UsersAdminPanel';
 
 const App = ()=> {
 
@@ -22,7 +23,7 @@ const App = ()=> {
     const [errorText, setErrorText] = useState("");
     const [userid, setUserID] = useState(null);
     const [currentView, setCurrentView] = useState("home");
-    const [chats] = useState([{ home: "home", id: "home"}, {home: "chat", id:"chat"} ]); // all chats
+    const [chats] = useState([{ home: "Home", id: "Home"}, {home: "Chat", id:"Chat"}, {home: "Users", id:"Users"} ]); // all chats
 
     const changeView = (view) => {
       setCurrentView(view);
@@ -87,6 +88,22 @@ const App = ()=> {
         </div>
         ) 
       break;
+      case "home":
+        return(
+          <div>
+            <Header activeChat={currentView} chats={chats} changeView={changeView}></Header>
+            <WelcomeScreen imie={userName} rola={role} userid = {userid}/>
+          </div>
+          ) 
+        break;
+        case "users":
+          return(
+            <div>
+              <Header activeChat={currentView} chats={chats} changeView={changeView}></Header>
+              <UsersAdminPanel />
+            </div>
+            ) 
+          break;
   
     default:
       return(

@@ -1,9 +1,11 @@
-import React from "react";
+import React, {useState} from 'react';
 import ListOfChatButtons from "./ListOfChatButtons";
 import logo from '../logo.png'
+import Modal from './Modal'
 
 const Header = (props) =>{
-    console.log(props.changeView)
+    // console.log(props.changeView)
+
     return(        
     <div className="d-flex flex-row" style={{maxHeight:"100px", backgroundColor:"red", marginBottom:"2rem"}}>
         <div className="d-flex flex-row">
