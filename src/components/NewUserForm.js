@@ -38,6 +38,7 @@ const NewUserForm = () =>{
         setImie('');
         setNazwisko('');
         setNewRola('');
+        Array.from(document.querySelectorAll('input')).forEach(input => (input.value = ''));
       }
       }
 
