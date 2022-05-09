@@ -77,18 +77,16 @@ const App = ()=> {
   );
   if(isLoggedIn === true)
   switch (currentView) {
-    case "chat":
+    case "Chat":
       return(
         <div>
           <Header activeChat={currentView} chats={chats} changeView={changeView}></Header>
-          <WelcomeScreen imie={userName} rola={role} userid = {userid}/>
-        {/* <ListOfChatButtons activeChat={currentView} chats={chats} changeChatRoom={changeView}></ListOfChatButtons> */}
           <Chat imie={userName} rola={role} userid = {userid}></Chat>  
        
         </div>
         ) 
       break;
-      case "home":
+      case "Home":
         return(
           <div>
             <Header activeChat={currentView} chats={chats} changeView={changeView}></Header>
@@ -96,7 +94,7 @@ const App = ()=> {
           </div>
           ) 
         break;
-        case "users":
+        case "Users":
           return(
             <div>
               <Header activeChat={currentView} chats={chats} changeView={changeView}></Header>
