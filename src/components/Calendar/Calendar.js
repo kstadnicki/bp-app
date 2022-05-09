@@ -41,7 +41,7 @@ const Calendar = ()=>{
     week0 = tempDays.map((number) =>(
         <Day currentDate={currentDate} isCurrentMonth={number > 7 ? false : true} dayNumber={number}></Day>
      ))
-
+       
     tempDays = [];
     var currentMonthDay = 1
     if(day != 7){
@@ -122,7 +122,6 @@ const Calendar = ()=>{
     const currentMonthDays = nextDate.getDate();
 
 
-
     var nextMonthDays = 1;
 
     // console.log(currentMonthDays - currentMonthDay + 1);
@@ -179,7 +178,6 @@ const Calendar = ()=>{
     // props.chats.map((room)=>(
     //     <ChatButton activeChat={props.activeChat} key={room.id} room={room.id} changeChatRoom={props.changeChatRoom}/>
     //  ))    
-    // console.log(week1)
     return (
         <div className="container-md">
             {/* <div className="inner-container"><h1>{month}</h1><button></button></div> */}

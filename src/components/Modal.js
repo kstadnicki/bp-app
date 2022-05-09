@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Modal = ({toggleModal, modalSubmit}) =>{
+const Modal = ({toggleModal, modalSubmit,children}) =>{
 
     return(
     <div className="modal-visible fixed-top" tabIndex="-1">
@@ -11,7 +11,7 @@ const Modal = ({toggleModal, modalSubmit}) =>{
           <button type="button" className="btn-close btn-close-white" data-bs-dismiss="modal" onClick={toggleModal} aria-label="Close"></button>
         </div>
         <div className="modal-body">
-          <p>Treść modala</p>
+          {children}
         </div>
         <div className="modal-footer">
             <button type="button" className="btn btn-primary" onClick={modalSubmit}>Save changes</button>
