@@ -13,7 +13,7 @@ const NewUserForm = () =>{
     const [password, setPassword] = useState('');
     const [imie, setImie] = useState('');
     const [nazwisko, setNazwisko] = useState('');
-    const [newRola, setNewRola] = useState('');
+    const [newRola, setNewRola] = useState('mechanik');
 
 
     const addUsr = async(e) => {
@@ -66,7 +66,7 @@ const NewUserForm = () =>{
         <label className="form-label fs-5 text-center text-light" style={{marginLeft:"auto", marginRight:"auto", display:"block", maxWidth:"100%"}}>
           Rola:<br></br>
           <select id="rola" name="rola" onChange={ e => setNewRola(e.target.value)} >
-            <option value="mechanik">Mechanik</option>
+            <option value="mechanik" selected>Mechanik</option>
             <option value="admin">Administrator</option>
 
             {/* <option value="fiat" selected>Fiat</option>

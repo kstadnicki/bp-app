@@ -23,7 +23,9 @@ const App = ()=> {
     const [errorText, setErrorText] = useState("");
     const [userid, setUserID] = useState(null);
     const [currentView, setCurrentView] = useState("home");
-    const [chats] = useState([{ home: "Home", id: "Home"}, {home: "Chat", id:"Chat"}, {home: "Users", id:"Users"} ]); // all chats
+    const [chats, setChats] = useState([ { home: "Home", id: "Home"}, {home: "Chat", id:"Chat"}]); // all chats
+
+
 
     const changeView = (view) => {
       setCurrentView(view);
@@ -45,6 +47,10 @@ const App = ()=> {
           setUserID(login);
           // console.log("id " + userid);
           setRole(response._document.data.value.mapValue.fields.rola.stringValue);
+          let rola = response._document.data.value.mapValue.fields.rola.stringValue;
+          if(rola === "admin"){
+            setChats([...chats, {home: "Users", id:"Users"}]);
+          }
           // console.log(role);
           setIsLoggedIn(true);
       }

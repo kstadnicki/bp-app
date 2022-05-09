@@ -7,7 +7,6 @@ const ListOfChatButtons = (props)=>{
         const chatsList = props.chats.map((room)=>(
            <ChatButton activeChat={props.activeChat} key={room.id} room={room.id} changeChatRoom={props.changeChatRoom}/>
         ))    
-          console.log(chatsList);
   return(
       <div className="buttons-list" style={{paddingBottom:"2rem"}}>
         {chatsList}
