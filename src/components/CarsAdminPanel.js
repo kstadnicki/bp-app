@@ -4,35 +4,35 @@ import { getDocs, collection, doc, setDoc, addDoc, deleteDoc, query, orderBy, li
 import Error from './error.js'
 import logo from '../logo.png'
 import Modal from './Modal'
-import NewUserForm from './NewUserForm.js';
+import NewCarForm from './NewCarForm.js';
 
-const UsersAdminPanel = ({imie, rola, userid}) =>{
+const CarsAdminPanel = ({imie, rola, userid}) =>{
 
     const [newLogin, setNewLogin] = useState('');
 
-    const userRef = collection(db, "users");
+    const userRef = collection(db, "cars");
     // const q = query(usersRef, orderBy("createdAt"), limit(25));
     // const [users] = useCollectionData(q, { idField: "id" });
 
-    const [users, setUsers] = useState([]); // all users ordered by date
+    const [cars, setCars] = useState([]); // all users ordered by date
 
     const refresh = () =>{ // set or refresh all users
         const getData = async () => {
-          const q = query(userRef);
-          const data = await getDocs(q, orderBy("nazwisko"));
-          console.log(data);
-          console.log(users);
-          setUsers(data.docs.map((doc) => ({...doc.data(), id: doc.id })));
+            const q = query(userRef);
+            const data = await getDocs(q, orderBy("Model"));
+            console.log(data);
+            console.log(cars);
+            setCars(data.docs.map((doc) => ({...doc.data(), id: doc.id })));
             //   onSnapshot(usersRef,(snapshot)=>{
             //   setUsers(snapshot.docs.map((msg)=>({...msg.data(), id: msg.id})));
             //   console.log(users)
             // })
         };
         getData();
-    } 
+    }
 
     useEffect(() => {
-      refresh();
+        refresh();
     }, [])
 
     // refresh();
@@ -50,23 +50,23 @@ const UsersAdminPanel = ({imie, rola, userid}) =>{
     //   return(<div>{msg.login}</div>)
     // })
 
-    const delUser = async (id) => {
-      if(window.confirm("Czy napewno chcesz usunąć użytkownika o loginie "+ id)){
-        console.log(id);
-        await deleteDoc(doc(db, "users", id));
-        refresh();
-      }
-      
-    } 
+    const delCar = async (id) => {
+        if(window.confirm("Czy na pewno chcesz usunąć auto o loginie "+ id)){
+            console.log(id);
+            await deleteDoc(doc(db, "cars", id));
+            refresh();
+        }
 
-    const listOfusers = users.map((msg) =>(
-      <div className='text-light'>{msg.id} <button onClick={() => delUser(msg.id)} >X</button></div>
+    }
+
+    const listOfcars = cars.map((msg) =>(
+        <div className='text-light'>{msg.id} <button onClick={() => delCar(msg.id)} >X</button></div>
     ))
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const toggleModal=()=>{
-      setIsModalOpen(!isModalOpen);
+        setIsModalOpen(!isModalOpen);
     }
 
     const modalSubmit=()=>{
@@ -74,17 +74,17 @@ const UsersAdminPanel = ({imie, rola, userid}) =>{
     }
 
     return(
-      <div className="container-md">
-        <button className="btn btn-primary" onClick={toggleModal}>Dodaj</button>
-        {isModalOpen &&
-          <Modal toggleModal={toggleModal} modalSubmit={modalSubmit} title="Dodaj użytkownika">
-            <NewUserForm submitFunc={modalSubmit} toggleModal={toggleModal} />
-          </Modal>
-        } 
-        {listOfusers}
-        {/* <ListOfChatusers userid={userid} users={users}></ListOfChatusers> */}
-      </div>
+        <div className="container-md">
+            <button className="btn btn-primary" onClick={toggleModal}>Dodaj</button>
+            {isModalOpen &&
+                <Modal toggleModal={toggleModal} modalSubmit={modalSubmit} title="Dodaj samochód">
+                    <NewCarForm submitFunc={modalSubmit} toggleModal={toggleModal} />
+                </Modal>
+            }
+            {listOfcars}
+            {/* <ListOfChatusers userid={userid} users={users}></ListOfChatusers> */}
+        </div>
     )
 }
 
-export default UsersAdminPanel;
+export default CarsAdminPanel;

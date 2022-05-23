@@ -12,6 +12,7 @@ import Chat from './components/Chat';
 import Header from './components/header.js'
 import Modal from './components/Modal'
 import UsersAdminPanel from './components/UsersAdminPanel';
+import CarsAdminPanel from './components/CarsAdminPanel';
 
 const App = ()=> {
 
@@ -49,7 +50,7 @@ const App = ()=> {
           setRole(response._document.data.value.mapValue.fields.rola.stringValue);
           let rola = response._document.data.value.mapValue.fields.rola.stringValue;
           if(rola === "admin"){
-            setChats([...chats, {home: "Users", id:"Users"}]);
+            setChats([...chats, {home: "Users", id:"Users"}, {home: "Cars", id:"Cars"}]);
           }
           // console.log(role);
           setIsLoggedIn(true);
@@ -108,6 +109,15 @@ const App = ()=> {
             </div>
             ) 
           break;
+      case "Cars":
+          return(
+              <div>
+                  <Header activeChat={currentView} chats={chats} changeView={changeView}></Header>
+                  <CarsAdminPanel />
+              </div>
+          )
+          break;
+
   
     default:
       return(

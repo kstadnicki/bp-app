@@ -5,7 +5,7 @@ import { getDocs, collection, doc, setDoc, addDoc, query, orderBy, limit, getDoc
 import Error from './error.js'
 import logo from '../logo.png'
 
-const NewUserForm = () =>{
+const NewUserForm = (props) =>{
 
 
 
@@ -39,6 +39,8 @@ const NewUserForm = () =>{
         setNazwisko('');
         setNewRola('');
         Array.from(document.querySelectorAll('input')).forEach(input => (input.value = ''));
+        props.submitFunc();
+        props.toggleModal()
       }
       }
 
