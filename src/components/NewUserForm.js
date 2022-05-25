@@ -40,7 +40,7 @@ const NewUserForm = (props) =>{
         setNewRola('');
         Array.from(document.querySelectorAll('input')).forEach(input => (input.value = ''));
         props.submitFunc();
-        props.toggleModal()
+        props.toggleModal();
       }
       }
 

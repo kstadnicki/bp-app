@@ -5,6 +5,7 @@ import Error from './error.js'
 import logo from '../logo.png'
 import Modal from './Modal'
 import NewUserForm from './NewUserForm.js';
+import UserDetails from "./userDetails";
 
 const UsersAdminPanel = ({imie, rola, userid}) =>{
 
@@ -15,6 +16,9 @@ const UsersAdminPanel = ({imie, rola, userid}) =>{
     // const [users] = useCollectionData(q, { idField: "id" });
 
     const [users, setUsers] = useState([]); // all users ordered by date
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalName, setModalName] = useState('addUser')
+    const [userDetails, setUserDetails] = useState([])
 
     const refresh = () =>{ // set or refresh all users
         const getData = async () => {
@@ -57,17 +61,24 @@ const UsersAdminPanel = ({imie, rola, userid}) =>{
         refresh();
       }
       
-    } 
-
-    const listOfusers = users.map((msg) =>(
-      <div className='text-light'>{msg.id} <button onClick={() => delUser(msg.id)} >X</button></div>
-    ))
-
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    }
 
     const toggleModal=()=>{
-      setIsModalOpen(!isModalOpen);
+        setModalName('addUser');
+        setIsModalOpen(!isModalOpen);
     }
+
+    const toggleModalUserDetails=(abc)=>{
+        setModalName('userDetails');
+        let user = users.filter(function(element){return element.id === abc});
+        setUserDetails(user[0]);
+        setIsModalOpen(!isModalOpen);
+    }
+
+    const listOfusers = users.map((usr) =>(
+      <div className='text-light'>{usr.id} <button onClick={() => toggleModalUserDetails(usr.id)} >Więcej</button><button onClick={() => delUser(usr.id)} >X</button></div>
+    ))
+
 
     const modalSubmit=()=>{
         refresh();
@@ -76,12 +87,17 @@ const UsersAdminPanel = ({imie, rola, userid}) =>{
     return(
       <div className="container-md">
         <button className="btn btn-primary" onClick={toggleModal}>Dodaj</button>
-        {isModalOpen &&
+        {(isModalOpen && modalName === 'addUser') &&
           <Modal toggleModal={toggleModal} modalSubmit={modalSubmit} title="Dodaj użytkownika">
             <NewUserForm submitFunc={modalSubmit} toggleModal={toggleModal} />
           </Modal>
-        } 
-        {listOfusers}
+        }
+        {(isModalOpen && modalName === 'userDetails') &&
+              <Modal toggleModal={toggleModal} modalSubmit={modalSubmit} title={"Dane użytkownika " + userDetails.id}>
+                  <UserDetails users={users} userToOpen={userDetails}></UserDetails>
+              </Modal>
+        }
+          {listOfusers}
         {/* <ListOfChatusers userid={userid} users={users}></ListOfChatusers> */}
       </div>
     )

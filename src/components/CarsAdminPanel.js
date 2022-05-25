@@ -5,6 +5,8 @@ import Error from './error.js'
 import logo from '../logo.png'
 import Modal from './Modal'
 import NewCarForm from './NewCarForm.js';
+import NewUserForm from "./NewUserForm";
+import CarDetails from "./carDetails";
 
 const CarsAdminPanel = ({imie, rola, userid}) =>{
 
@@ -15,6 +17,9 @@ const CarsAdminPanel = ({imie, rola, userid}) =>{
     // const [users] = useCollectionData(q, { idField: "id" });
 
     const [cars, setCars] = useState([]); // all users ordered by date
+    const [modalName, setModalName] = useState('addCar')
+    const [carDetails, setCarDetails] = useState([])
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const refresh = () =>{ // set or refresh all users
         const getData = async () => {
@@ -58,16 +63,23 @@ const CarsAdminPanel = ({imie, rola, userid}) =>{
         }
 
     }
-
-    const listOfcars = cars.map((msg) =>(
-        <div className='text-light'>{msg.id} <button onClick={() => delCar(msg.id)} >X</button></div>
-    ))
-
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
     const toggleModal=()=>{
+        setModalName('addCar');
         setIsModalOpen(!isModalOpen);
     }
+
+    const toggleModalCarDetails=(abc)=>{
+        setModalName('carDetails');
+        let car = cars.filter(function(element){return element.id === abc});
+        setCarDetails(car[0]);
+        setIsModalOpen(!isModalOpen);
+    }
+
+    const listOfcars = cars.map((car) =>(
+        <div className='text-light'>{car.id} <button onClick={() => toggleModalCarDetails(car.id)} >Więcej</button><button onClick={() => delCar(car.id)} >X</button></div>
+    ))
+
+
 
     const modalSubmit=()=>{
         refresh();
@@ -76,9 +88,14 @@ const CarsAdminPanel = ({imie, rola, userid}) =>{
     return(
         <div className="container-md">
             <button className="btn btn-primary" onClick={toggleModal}>Dodaj</button>
-            {isModalOpen &&
-                <Modal toggleModal={toggleModal} modalSubmit={modalSubmit} title="Dodaj samochód">
-                    <NewCarForm submitFunc={modalSubmit} toggleModal={toggleModal} />
+            {(isModalOpen && modalName === 'addCar') &&
+                <Modal toggleModal={toggleModal} modalSubmit={modalSubmit} title="Dodaj użytkownika">
+                    <NewUserForm submitFunc={modalSubmit} toggleModal={toggleModal} />
+                </Modal>
+            }
+            {(isModalOpen && modalName === 'carDetails') &&
+                <Modal toggleModal={toggleModal} modalSubmit={modalSubmit} title={"Dane auta " + carDetails.id}>
+                    <CarDetails users={cars} carToOpen={carDetails}></CarDetails>
                 </Modal>
             }
             {listOfcars}
