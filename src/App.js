@@ -70,7 +70,6 @@ const App = ()=> {
   if(isLoggedIn === false)
   return (    
   <div>
-      <button className="btn btn-primary" onClick={toggleModal}>ToggleModal</button>
     {isError === true &&
        <Error Text={errorText} alertType="alert-danger"></Error>
       }
