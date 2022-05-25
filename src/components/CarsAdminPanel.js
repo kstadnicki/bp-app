@@ -89,8 +89,8 @@ const CarsAdminPanel = ({imie, rola, userid}) =>{
         <div className="container-md">
             <button className="btn btn-primary" onClick={toggleModal}>Dodaj</button>
             {(isModalOpen && modalName === 'addCar') &&
-                <Modal toggleModal={toggleModal} modalSubmit={modalSubmit} title="Dodaj użytkownika">
-                    <NewUserForm submitFunc={modalSubmit} toggleModal={toggleModal} />
+                <Modal toggleModal={toggleModal} modalSubmit={modalSubmit} title="Dodaj auto">
+                    <NewCarForm submitFunc={modalSubmit} toggleModal={toggleModal} />
                 </Modal>
             }
             {(isModalOpen && modalName === 'carDetails') &&
