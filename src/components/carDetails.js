@@ -4,9 +4,9 @@ const carDetails = ({carToOpen}) =>{
 
     return(
         <div className="text-light">
-            <p><b>Model:</b> {carToOpen.Model}</p>
-            <p><b>Wersja:</b> {carToOpen.Wersja}</p>
-            <p><b>Rok produkcji:</b> {carToOpen.Rok}</p>
+            <p><b>Model:</b> {carToOpen.model}</p>
+            <p><b>Wersja:</b> {carToOpen.wersja}</p>
+            <p><b>Rok produkcji:</b> {carToOpen.rok}</p>
         </div>
     )
 }

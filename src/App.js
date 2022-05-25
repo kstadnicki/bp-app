@@ -71,11 +71,6 @@ const App = ()=> {
   return (    
   <div>
       <button className="btn btn-primary" onClick={toggleModal}>ToggleModal</button>
-  {isModalOpen &&
-     <Modal toggleModal={toggleModal} modalSubmit={modalSubmit}>
-      <p>test</p>  
-     </Modal>
-   } 
     {isError === true &&
        <Error Text={errorText} alertType="alert-danger"></Error>
       }
