@@ -33,9 +33,6 @@ const EditCarForm = (props) =>{
         props.submitFunc();
         props.toggleModal()
     }
-    useEffect(() => {
-
-        },[])
 
     return(
         <div style={{padding:"5rem", backgroundColor:"#222", maxWidth:"500px", borderRadius:"5rem"}} className="d-flex justify-content-center container-sm shadow">
