@@ -7,6 +7,7 @@ import Modal from './Modal'
 import NewCarForm from './NewCarForm.js';
 import NewUserForm from "./NewUserForm";
 import CarDetails from "./carDetails";
+import EditCarForm from "./EditCarForm";
 
 const CarsAdminPanel = ({imie, rola, userid}) =>{
 
@@ -75,8 +76,16 @@ const CarsAdminPanel = ({imie, rola, userid}) =>{
         setIsModalOpen(!isModalOpen);
     }
 
+    const toggleModalCarEdit=(abc)=>{
+        setModalName('carEdit');
+        let car = cars.filter(function(element){return element.id === abc});
+        setCarDetails(car[0]);
+        setIsModalOpen(!isModalOpen);
+    }
+
+
     const listOfcars = cars.map((car) =>(
-        <div className='text-light'>{car.id} <button onClick={() => toggleModalCarDetails(car.id)} >Więcej</button><button onClick={() => delCar(car.id)} >X</button></div>
+        <div className='text-light'>{car.id} <button onClick={() => toggleModalCarDetails(car.id)} >Więcej</button><button onClick={() => toggleModalCarEdit(car.id)} >Edytuj</button><button onClick={() => delCar(car.id)} >X</button></div>
     ))
 
 
@@ -94,8 +103,13 @@ const CarsAdminPanel = ({imie, rola, userid}) =>{
                 </Modal>
             }
             {(isModalOpen && modalName === 'carDetails') &&
-                <Modal toggleModal={toggleModal} modalSubmit={modalSubmit} title={"Dane auta " + carDetails.id}>
+                <Modal toggleModal={toggleModal} modalSubmit={modalSubmit} title={"Dane auta: " + carDetails.id}>
                     <CarDetails users={cars} carToOpen={carDetails}></CarDetails>
+                </Modal>
+            }
+            {(isModalOpen && modalName === 'carEdit') &&
+                <Modal toggleModal={toggleModal} modalSubmit={modalSubmit} title={"Edytujesz auto: " + carDetails.id}>
+                    <EditCarForm toggleModal={toggleModal} submitFunc={modalSubmit} users={cars} carToOpen={carDetails}></EditCarForm>
                 </Modal>
             }
             {listOfcars}

@@ -6,7 +6,7 @@ import logo from '../logo.png'
 import Modal from './Modal'
 import NewUserForm from './NewUserForm.js';
 import UserDetails from "./userDetails";
-
+import EditUserForm from "./EditUserForm";
 const UsersAdminPanel = ({imie, rola, userid}) =>{
 
     const [newLogin, setNewLogin] = useState('');
@@ -74,9 +74,15 @@ const UsersAdminPanel = ({imie, rola, userid}) =>{
         setUserDetails(user[0]);
         setIsModalOpen(!isModalOpen);
     }
+    const toggleModalUserEdit=(abc)=>{
+        setModalName('editUser');
+        let user = users.filter(function(element){return element.id === abc});
+        setUserDetails(user[0]);
+        setIsModalOpen(!isModalOpen);
+    }
 
     const listOfusers = users.map((usr) =>(
-      <div className='text-light'>{usr.id} <button onClick={() => toggleModalUserDetails(usr.id)} >Więcej</button><button onClick={() => delUser(usr.id)} >X</button></div>
+      <div className='text-light'>{usr.id} <button onClick={() => toggleModalUserDetails(usr.id)} >Więcej</button><button onClick={() => toggleModalUserEdit(usr.id)} >Edytuj</button><button onClick={() => delUser(usr.id)} >X</button></div>
     ))
 
 
@@ -97,6 +103,11 @@ const UsersAdminPanel = ({imie, rola, userid}) =>{
                   <UserDetails users={users} userToOpen={userDetails}></UserDetails>
               </Modal>
         }
+          {(isModalOpen && modalName === 'editUser') &&
+              <Modal toggleModal={toggleModal} modalSubmit={modalSubmit} title="Dodaj użytkownika">
+                  <EditUserForm submitFunc={modalSubmit} toggleModal={toggleModal} userToOpen={userDetails} />
+              </Modal>
+          }
           {listOfusers}
         {/* <ListOfChatusers userid={userid} users={users}></ListOfChatusers> */}
       </div>
