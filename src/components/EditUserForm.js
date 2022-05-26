@@ -50,7 +50,7 @@ const EditUserForm = (props) =>{
                 <div>
                     <label className="form-label fs-5 text-center text-light" style={{marginLeft:"auto", marginRight:"auto", display:"block", maxWidth:"100%"}}>
                         Login:
-                        <input className="form-control shadow-sm" type="text" name="login" value={newLogin} onChange={ e => setNewLogin(e.target.value)} required/>
+                        <input className="form-control shadow-sm text-muted" type="text" name="login" value={newLogin} disabled onChange={ e => setNewLogin(e.target.value)} required/>
                     </label>
                 </div>
                 <label className="form-label fs-5 text-center text-light" style={{marginLeft:"auto", marginRight:"auto", display:"block", maxWidth:"100%"}}>
