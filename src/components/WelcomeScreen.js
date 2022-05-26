@@ -8,7 +8,7 @@ const WelcomeScreen = ({imie, rola, userid})=>{
         <div>
             <h1 className="float-md-end">Witaj {imie} Rola: {rola}</h1>
             <Calendar />      
-            <NewTaskForm/>        
+            {/* <NewTaskForm/>         */}
         </div>
     );
 }

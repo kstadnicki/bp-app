@@ -85,7 +85,11 @@ const CarsAdminPanel = ({imie, rola, userid}) =>{
 
 
     const listOfcars = cars.map((car) =>(
+<<<<<<< HEAD
         <div className='text-light'>{car.id} <button onClick={() => toggleModalCarDetails(car.id)} >Więcej</button><button onClick={() => toggleModalCarEdit(car.id)} >Edytuj</button><button onClick={() => delCar(car.id)} >X</button></div>
+=======
+        <div className='text-light'>{car.model} <button onClick={() => toggleModalCarDetails(car.id)} >Więcej</button><button onClick={() => delCar(car.id)} >X</button></div>
+>>>>>>> origin/master
     ))
 
 

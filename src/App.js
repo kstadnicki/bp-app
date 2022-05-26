@@ -41,6 +41,7 @@ const App = ()=> {
         setErrorText("Niepoprawny login lub hasło")
         return 0
       }
+
       if(response._document.data.value.mapValue.fields.password.stringValue === password){
           setUserName(response._document.data.value.mapValue.fields.imie.stringValue);
           //console.log(response._document.data.value);
@@ -50,11 +51,16 @@ const App = ()=> {
           setRole(response._document.data.value.mapValue.fields.rola.stringValue);
           let rola = response._document.data.value.mapValue.fields.rola.stringValue;
           if(rola === "admin"){
-            setChats([...chats, {home: "Users", id:"Users"}, {home: "Cars", id:"Cars"}]);
+            setChats([...chats, {home: "Users", id:"Users"}, {home: "Cars", id:"Cars"}, {home: "Log out", id:"Log out"} ]);
+          }else{
+            setChats([...chats, {home: "Log out", id:"Log out"} ]);
           }
           // console.log(role);
+
+          
           setIsLoggedIn(true);
       }
+
       if(response._document.data.value.mapValue.fields.password.stringValue !== password)
           setIsLoggedIn(false);
   }
@@ -111,6 +117,11 @@ const App = ()=> {
               </div>
           )
           break;
+      case "Log out":
+          setIsLoggedIn(false);
+          setChats([ { home: "Home", id: "Home"}, {home: "Chat", id:"Chat"}]);
+          setCurrentView('');
+        break;
 
   
     default:
