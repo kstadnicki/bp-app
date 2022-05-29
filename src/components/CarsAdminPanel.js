@@ -85,7 +85,7 @@ const CarsAdminPanel = ({imie, rola, userid}) =>{
 
 
     const listOfcars = cars.map((car) =>(
-        <div className='text-light'>{car.id} <button onClick={() => toggleModalCarDetails(car.id)} >Więcej</button><button onClick={() => toggleModalCarEdit(car.id)} >Edytuj</button><button onClick={() => delCar(car.id)} >X</button></div>
+        <div className='text-light'>{car.id} <button onClick={() => toggleModalCarDetails(car.id)} >Więcej</button> {rola === 'admin' ? <><button onClick={() => toggleModalCarEdit(car.id)} >Edytuj</button><button onClick={() => delCar(car.id)} >X</button></>: ''}</div>
     ))
 
 
@@ -96,7 +96,7 @@ const CarsAdminPanel = ({imie, rola, userid}) =>{
 
     return(
         <div className="container-md">
-            <button className="btn btn-primary" onClick={toggleModal}>Dodaj</button>
+            {rola === 'admin' ? <button className="btn btn-primary" onClick={toggleModal}>Dodaj</button>: ''}
             {(isModalOpen && modalName === 'addCar') &&
                 <Modal toggleModal={toggleModal} modalSubmit={modalSubmit} title="Dodaj auto">
                     <NewCarForm submitFunc={modalSubmit} toggleModal={toggleModal} />

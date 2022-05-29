@@ -24,7 +24,7 @@ const App = ()=> {
     const [errorText, setErrorText] = useState("");
     const [userid, setUserID] = useState(null);
     const [currentView, setCurrentView] = useState("home");
-    const [chats, setChats] = useState([ { home: "Home", id: "Home"}, {home: "Chat", id:"Chat"}]); // all chats
+    const [chats, setChats] = useState([ { home: "Home", id: "Home"}, {home: "Chat", id:"Chat"}, {home: "Cars", id:"Cars"}]); // all chats
 
 
 
@@ -51,7 +51,7 @@ const App = ()=> {
           setRole(response._document.data.value.mapValue.fields.rola.stringValue);
           let rola = response._document.data.value.mapValue.fields.rola.stringValue;
           if(rola === "admin"){
-            setChats([...chats, {home: "Users", id:"Users"}, {home: "Cars", id:"Cars"}, {home: "Log out", id:"Log out"} ]);
+            setChats([...chats, {home: "Users", id:"Users"}, {home: "Log out", id:"Log out"} ]);
           }else{
             setChats([...chats, {home: "Log out", id:"Log out"} ]);
           }
@@ -113,13 +113,13 @@ const App = ()=> {
           return(
               <div>
                   <Header activeChat={currentView} chats={chats} changeView={changeView}></Header>
-                  <CarsAdminPanel />
+                  <CarsAdminPanel rola={role}/>
               </div>
           )
           break;
       case "Log out":
           setIsLoggedIn(false);
-          setChats([ { home: "Home", id: "Home"}, {home: "Chat", id:"Chat"}]);
+          setChats([ { home: "Home", id: "Home"}, {home: "Chat", id:"Chat"}, {home: "Cars", id:"Cars"}]);
           setCurrentView('');
         break;
 
