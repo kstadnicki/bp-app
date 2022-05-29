@@ -82,7 +82,7 @@ const UsersAdminPanel = ({imie, rola, userid}) =>{
     }
 
     const listOfusers = users.map((usr) =>(
-      <div className='text-light'>{usr.id} <button onClick={() => toggleModalUserDetails(usr.id)} >Więcej</button><button onClick={() => toggleModalUserEdit(usr.id)} >Edytuj</button><button onClick={() => delUser(usr.id)} >X</button></div>
+      <div className='text-light'>{usr.id} - {usr.imie} {usr.nazwisko} - {usr.rola} <button onClick={() => toggleModalUserDetails(usr.id)} >Więcej</button><button onClick={() => toggleModalUserEdit(usr.id)} >Edytuj</button><button onClick={() => delUser(usr.id)} >X</button></div>
     ))
 
 
