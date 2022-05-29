@@ -13,6 +13,7 @@ import Header from './components/header.js'
 import Modal from './components/Modal'
 import UsersAdminPanel from './components/UsersAdminPanel';
 import CarsAdminPanel from './components/CarsAdminPanel';
+import TasksPanel from './components/TasksPanel';
 
 const App = ()=> {
 
@@ -24,7 +25,7 @@ const App = ()=> {
     const [errorText, setErrorText] = useState("");
     const [userid, setUserID] = useState(null);
     const [currentView, setCurrentView] = useState("home");
-    const [chats, setChats] = useState([ { home: "Home", id: "Home"}, {home: "Chat", id:"Chat"}, {home: "Cars", id:"Cars"}]); // all chats
+    const [chats, setChats] = useState([ { home: "Home", id: "Home"}, {home: "Chat", id:"Chat"}, {home: "Cars", id:"Cars"}, {home: "Tasks", id:"Tasks"}]); // all chats
 
 
 
@@ -117,9 +118,17 @@ const App = ()=> {
               </div>
           )
           break;
+      case "Tasks":
+        return(
+            <div>
+                <Header activeChat={currentView} chats={chats} changeView={changeView}></Header>
+                <TasksPanel rola={role}/>
+            </div>
+        )
+        break;
       case "Log out":
           setIsLoggedIn(false);
-          setChats([ { home: "Home", id: "Home"}, {home: "Chat", id:"Chat"}, {home: "Cars", id:"Cars"}]);
+          setChats([ { home: "Home", id: "Home"}, {home: "Chat", id:"Chat"}, {home: "Cars", id:"Cars"}, {home: "Tasks", id:"Tasks"}]);
           setCurrentView('');
         break;
 
