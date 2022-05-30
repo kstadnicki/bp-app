@@ -7,10 +7,12 @@ import Modal from './Modal'
 import TaskDetails from "./TaskDetails.js";
 import EditTaskForm from "./EditTaskForm";
 import NewTaskForm from './NewTaskForm.js';
+import zadanko from "../imgs/zadanko.png";
 
 const TasksPanel = ({imie, rola, userid}) =>{
 
     const [newLogin, setNewLogin] = useState('');
+
 
     const userRef = collection(db, "tasks");
     const userRef2 = collection(db, "users");
@@ -19,11 +21,13 @@ const TasksPanel = ({imie, rola, userid}) =>{
     // const [users] = useCollectionData(q, { idField: "id" });
 
     const [tasks, setTasks] = useState([]); // all users ordered by date
+    const [closed, setClosed] = useState([]); // all users ordered by date
     const [modalName, setModalName] = useState('addtask')
     const [taskDetails, settaskDetails] = useState([])
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [users, setUsers] = useState([]);
     const [cars, setCars] = useState([]);
+    const [name, setName] = useState(imie);
 
     const getCars = () =>{ // set or refresh all users
         const getData3 = async () => {
@@ -53,12 +57,22 @@ const TasksPanel = ({imie, rola, userid}) =>{
 
     const refresh = () =>{ // set or refresh all users
         const getData = async () => {
-            const q = query(userRef, where("status", "==", "Open"));
+            
+            let q = query(userRef, where("status", "==", "Open"), where("login", "==", userid) );
+            let q2 = query(userRef, where("status", "==", "closed"), where("login", "==", userid));
+
+            if(rola === "admin" && name == null){
+                q = query(userRef, where("status", "==", "Open") );
+                q2 = query(userRef, where("status", "==", "closed"));
+            }
+
             const data = await getDocs(q);
-            console.log(data);
-            // setTasks([]);
             setTasks(data.docs.map((doc) => ({...doc.data(), id: doc.id })));
-            console.log(tasks);
+
+
+            const data2 = await getDocs(q2);
+            setClosed(data2.docs.map((doc) => ({...doc.data(), id: doc.id })));
+            // console.log(tasks);
             //   onSnapshot(usersRef,(snapshot)=>{
             //   setUsers(snapshot.docs.map((msg)=>({...msg.data(), id: msg.id})));
             //   console.log(users)
@@ -118,7 +132,11 @@ const TasksPanel = ({imie, rola, userid}) =>{
 
 
     const listOftasks = tasks.map((task) =>(
-        <div className='text-light'>{task.id} - {task.Name}: {task.Description} {task.login} {task.status} <button onClick={() => toggleModaltaskDetails(task.id)} >Więcej</button> {rola === 'admin' ? <><button onClick={() => toggleModaltaskEdit(task.id)} >Edytuj</button><button onClick={() => deltask(task.id)} >X</button></>: ''}</div>
+        <div className='text-light'>{task.id} - {task.Name}: {task.Description} {task.login} {task.status} <button className="btn btn-info" onClick={() => toggleModaltaskDetails(task.id)} >Więcej</button> {rola === 'admin' && name === null ? <><button className="btn btn-primary" onClick={() => toggleModaltaskEdit(task.id)} >Edytuj</button> <button className="btn btn-danger" onClick={() => deltask(task.id)} >X</button></>: ''}</div>
+    ))
+
+    const listOfClosed = closed.map((task) =>(
+        <div className='text-secondary'>{task.id} - {task.Name}: {task.Description} {task.login} {task.status} <button className="btn btn-info" onClick={() => toggleModaltaskDetails(task.id)} >Więcej</button></div>
     ))
 
     const listOfusers = users.map((usr) => (
@@ -135,7 +153,9 @@ const TasksPanel = ({imie, rola, userid}) =>{
 
     return(
         <div className="container-md">
-             <button className="btn btn-primary" onClick={toggleModal}>Dodaj</button>
+            {name === null ? <img src={zadanko} alt="Zadanko <3" width="300" height="300"/> : ""}
+            <h1>{imie === null ? "Wszystkie zadania" : "Moje zadania"}</h1>
+             {name === null ? <button className="btn btn-primary" onClick={toggleModal}>Dodaj</button> : ''}
             {(isModalOpen && modalName === 'addtask') &&
                 <Modal toggleModal={toggleModal} modalSubmit={modalSubmit} title="Dodaj zadanie">
                     <NewTaskForm users={listOfusers} cars={listOfcars} submitFunc={modalSubmit} toggleModal={toggleModal} />
@@ -152,6 +172,7 @@ const TasksPanel = ({imie, rola, userid}) =>{
                 </Modal>
             }
             {listOftasks}
+            {listOfClosed}
             {/* <ListOfChatusers userid={userid} users={users}></ListOfChatusers> */}
         </div>
     )

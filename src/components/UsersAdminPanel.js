@@ -7,6 +7,9 @@ import Modal from './Modal'
 import NewUserForm from './NewUserForm.js';
 import UserDetails from "./userDetails";
 import EditUserForm from "./EditUserForm";
+import ludzik from "../imgs/ludzik.png";
+
+
 const UsersAdminPanel = ({imie, rola, userid}) =>{
 
     const [newLogin, setNewLogin] = useState('');
@@ -82,7 +85,7 @@ const UsersAdminPanel = ({imie, rola, userid}) =>{
     }
 
     const listOfusers = users.map((usr) =>(
-      <div className='text-light'>{usr.id} - {usr.imie} {usr.nazwisko} - {usr.rola} <button onClick={() => toggleModalUserDetails(usr.id)} >Więcej</button><button onClick={() => toggleModalUserEdit(usr.id)} >Edytuj</button><button onClick={() => delUser(usr.id)} >X</button></div>
+      <div className='text-light'>{usr.id} - {usr.imie} {usr.nazwisko} - {usr.rola} <button className="btn btn-info" onClick={() => toggleModalUserDetails(usr.id)} >Więcej</button> <button className="btn btn-primary" onClick={() => toggleModalUserEdit(usr.id)} >Edytuj</button> <button className="btn btn-danger" onClick={() => delUser(usr.id)} >X</button></div>
     ))
 
 
@@ -92,6 +95,8 @@ const UsersAdminPanel = ({imie, rola, userid}) =>{
 
     return(
       <div className="container-md">
+        <img src={ludzik} alt="Ludzik <3" width="300" height="300"/> 
+        <h1>Lista wszystkich użytkowników</h1>
         <button className="btn btn-primary" onClick={toggleModal}>Dodaj</button>
         {(isModalOpen && modalName === 'addUser') &&
           <Modal toggleModal={toggleModal} modalSubmit={modalSubmit} title="Dodaj użytkownika">

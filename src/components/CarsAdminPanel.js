@@ -8,6 +8,7 @@ import NewCarForm from './NewCarForm.js';
 import NewUserForm from "./NewUserForm";
 import CarDetails from "./carDetails";
 import EditCarForm from "./EditCarForm";
+import samochodzik from "../imgs/samochodzik.png";
 
 const CarsAdminPanel = ({imie, rola, userid}) =>{
 
@@ -85,7 +86,7 @@ const CarsAdminPanel = ({imie, rola, userid}) =>{
 
 
     const listOfcars = cars.map((car) =>(
-        <div className='text-light'>{car.id} - {car.model} {car.wersja}  <button onClick={() => toggleModalCarDetails(car.id)} >Więcej</button> {rola === 'admin' ? <><button onClick={() => toggleModalCarEdit(car.id)} >Edytuj</button><button onClick={() => delCar(car.id)} >X</button></>: ''}</div>
+        <div className='text-light'>{car.id} - {car.model} {car.wersja}  <button className="btn btn-info" onClick={() => toggleModalCarDetails(car.id)} >Więcej</button> {rola === 'admin' ? <><button className="btn btn-primary" onClick={() => toggleModalCarEdit(car.id)} >Edytuj</button> <button className="btn btn-danger" onClick={() => delCar(car.id)} >X</button></>: ''}</div>
     ))
 
 
@@ -96,6 +97,8 @@ const CarsAdminPanel = ({imie, rola, userid}) =>{
 
     return(
         <div className="container-md">
+            <img src={samochodzik} alt="Samochodzik <3" width="300" height="300"/> 
+            <h1>Samochodziki</h1>
             {rola === 'admin' ? <button className="btn btn-primary" onClick={toggleModal}>Dodaj</button>: ''}
             {(isModalOpen && modalName === 'addCar') &&
                 <Modal toggleModal={toggleModal} modalSubmit={modalSubmit} title="Dodaj auto">

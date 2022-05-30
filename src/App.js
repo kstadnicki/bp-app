@@ -122,7 +122,7 @@ const App = ()=> {
         return(
             <div>
                 <Header activeChat={currentView} chats={chats} changeView={changeView}></Header>
-                <TasksPanel rola={role}/>
+                <TasksPanel rola={role} userid={userid} imie={null}/>
             </div>
         )
         break;
